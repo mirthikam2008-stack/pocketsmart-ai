@@ -1,0 +1,102 @@
+name: PocketSmart AI Continuous Integration & Security Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  lint-and-security:
+    name: Code Quality & Security Auditing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Linting & Security Tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 bandit
+
+      - name: Static Code Linting (Flake8)
+        run: |
+          # Stop build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Exit-zero treats all errors as warnings. Max line length 140
+          flake8 . --count --exit-zero --max-complexity=15 --max-line-length=140 --statistics
+
+      - name: Static Application Security Testing (Bandit)
+        run: |
+          bandit -r services/ schemas.py app.py -ll -ii
+
+      - name: Detect Accidental Secret Leaks
+        run: |
+          echo "Scanning workspace for hardcoded API keys..."
+          if grep -rnE "AIzaSy[0-9A-Za-z-_]{33}" . --exclude-dir={.git,.venv,venv}; then
+            echo "::error::Hardcoded Google Gemini API Key detected in repository!"
+            exit 1
+          else
+            echo "No exposed API keys found."
+          fi
+
+  test-matrix:
+    name: Automated 8-Stage Test Matrix
+    needs: lint-and-security
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Project Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run PocketSmart AI 8-Stage Automated Verification Pipeline
+        env:
+          GEMINI_API_KEY: "mock_test_key_for_ci_pipeline"
+        run: |
+          python test_pipeline.py --mode mock
+
+  docker-build:
+    name: Container Packaging & Health Verification
+    needs: test-matrix
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Container Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: pocketsmart-ai:ci-test
+
+      - name: Verify Container Build Integrity
+        run: |
+          docker images | grep pocketsmart-ai
+          echo "Docker container build verification PASSED."

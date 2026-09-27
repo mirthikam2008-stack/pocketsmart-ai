@@ -1,0 +1,21 @@
+date,category,description,amount
+# Scenario 1: Spending Exceeding Total Income (Deficit / Overdraft risk)
+2026-09-01,Housing,Luxury Penthouse Lease,3800.00
+2026-09-02,Shopping,High-End Designer Boutique,1450.00
+2026-09-04,Food & Dining,Fine Dining Tasting Menu,620.00
+2026-09-05,Entertainment,VIP Concert Experience,450.00
+
+# Scenario 2: Unusual High-Frequency Micro-Transactions (Micro-Spend Leakage)
+2026-09-06,Food & Dining,Coffee Kiosk Morning,5.50
+2026-09-06,Food & Dining,Afternoon Cold Brew,6.25
+2026-09-07,Food & Dining,Coffee Kiosk Espresso,4.75
+2026-09-07,Food & Dining,Snack Vending Machine,3.50
+2026-09-08,Food & Dining,Drive-thru Iced Coffee,5.95
+2026-09-08,Entertainment,In-App Mobile Game Purchase,2.99
+2026-09-09,Entertainment,In-App Mobile Game Gems,4.99
+2026-09-09,Entertainment,Micro-Subscription Tier 1,1.99
+2026-09-10,Food & Dining,Corner Store Energy Drink,3.99
+2026-09-10,Food & Dining,Specialty Tea Shop,6.50
+
+# Scenario 3: Massive Outlier Purchase (Anomaly)
+2026-09-15,Shopping,Collector Mechanical Watch,3200.00

@@ -1,0 +1,17 @@
+# Sample Transactions for PocketSmart AI
+date,category,description,amount
+2026-09-01,Housing,Monthly Rent,1500.00
+2026-09-02,Groceries,Supermarket Wholesale Restock,245.50
+2026-09-03,Utilities,Electricity & Gas Bill,140.00
+2026-09-04,Utilities,High-Speed Internet Fiber,65.00
+2026-09-05,Food & Dining,Artisan Cafe & Bakery,32.75
+2026-09-06,Entertainment,Streaming Video & Audio Subscriptions,45.99
+2026-09-08,Transportation,Metro Transit Monthly Pass,95.00
+2026-09-10,Food & Dining,Weekend Dining Out,88.40
+2026-09-12,Shopping,Clothing and Apparel Store,185.20
+2026-09-14,Health,Gym Membership Monthly,55.00
+2026-09-16,Food & Dining,Food Delivery App Order,42.10
+2026-09-18,Entertainment,Movie Tickets & Concessions,38.00
+2026-09-20,Groceries,Mid-Month Grocery Run,112.30
+2026-09-22,Personal Care,Haircut & Grooming,45.00
+2026-09-23,Shopping,Online Gadget Accessory,64.99

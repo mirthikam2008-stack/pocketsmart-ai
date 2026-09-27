@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PocketSmart AI™ — Real-World Lifestyle Budget & Procurement Engine</title>
+  <meta name="description" content="AI-Powered Real-World Budget Optimization Engine for Home, Travel, Events, Weddings, Tech, Nutrition, and Collegiate Living with Google Gemini Intelligence." />
+  
+  <!-- Premium Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+
+  <!-- Top System Status Strip -->
+  <div class="top-status-bar">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span class="status-pill"><span class="status-dot"></span> System Operational</span>
+      <span>FastAPI High Concurrency Engine • 8 Real-World Optimizers</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <span>Model: Google Gemini 3.7 Pro</span>
+      <span>•</span>
+      <a href="/docs" target="_blank" style="color: var(--primary-light); text-decoration: none; font-weight: 600;">Swagger Docs ↗</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-wrapper" onclick="switchTab('home')">
+        <div class="brand-icon">
+          <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div>
+          <span class="brand-name">PocketSmart <span class="gradient-text">AI</span></span>
+          <span class="brand-version">ENTERPRISE</span>
+        </div>
+      </div>
+
+      <!-- Segmented Navigation Menu with Professional Planners Dropdown -->
+      <nav class="segmented-nav" id="main-segmented-nav">
+        <button class="nav-tab-btn active" id="tab-home" onclick="switchTab('home')">
+          <i data-lucide="home" style="width: 14px; height: 14px;"></i> Home
+        </button>
+        <button class="nav-tab-btn" id="tab-dashboard" onclick="switchTab('dashboard')">
+          <i data-lucide="layout-dashboard" style="width: 14px; height: 14px;"></i> Dashboard
+        </button>
+
+        <!-- AI Planners Professional Dropdown -->
+        <div class="nav-dropdown-wrapper" id="planners-dropdown">
+          <button class="nav-tab-btn nav-dropdown-trigger" id="tab-planners-dropdown" onclick="togglePlannersDropdown(event)">
+            <i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--primary-light);"></i>
+            <span>AI Planners</span>
+            <i data-lucide="chevron-down" class="dropdown-chevron" style="width: 13px; height: 13px;"></i>
+          </button>
+          
+          <div class="nav-dropdown-menu" id="planners-menu">
+            <div class="dropdown-section-label">Lifestyle & Environments</div>
+            <div class="dropdown-grid">
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-home-planner" onclick="selectPlannerTab('home-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+                  <i data-lucide="armchair" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Home Interior</div>
+                  <div class="dropdown-item-sub">Decor & furnishings multi-store AI</div>
+                </div>
+              </a>
+
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-party-planner" onclick="selectPlannerTab('party-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(236, 72, 153, 0.15); color: #ec4899;">
+                  <i data-lucide="party-popper" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Party & Events</div>
+                  <div class="dropdown-item-sub">Venue, catering & guest math</div>
+                </div>
+              </a>
+
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-travel-planner" onclick="selectPlannerTab('travel-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
+                  <i data-lucide="plane" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Travel & Vacation</div>
+                  <div class="dropdown-item-sub">Flights, stays & activity bundles</div>
+                </div>
+              </a>
+
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-wedding-planner" onclick="selectPlannerTab('wedding-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(244, 114, 182, 0.15); color: #f472b6;">
+                  <i data-lucide="heart-handshake" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Wedding Capital</div>
+                  <div class="dropdown-item-sub">Banquet, photography & attire</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="dropdown-section-label" style="margin-top: 0.5rem;">Productivity & Daily Living</div>
+            <div class="dropdown-grid">
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-tech-planner" onclick="selectPlannerTab('tech-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                  <i data-lucide="laptop" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Tech Workstation</div>
+                  <div class="dropdown-item-sub">Developer gear & ergonomics</div>
+                </div>
+              </a>
+
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-grocery-planner" onclick="selectPlannerTab('grocery-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                  <i data-lucide="shopping-bag" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Nutrition & Grocery</div>
+                  <div class="dropdown-item-sub">Weekly meal prep & macros</div>
+                </div>
+              </a>
+
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-jewelry-planner" onclick="selectPlannerTab('jewelry-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(52, 211, 153, 0.15); color: #34d399;">
+                  <i data-lucide="gem" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Haute Joaillerie</div>
+                  <div class="dropdown-item-sub">Vision AI outfit matching</div>
+                </div>
+              </a>
+
+              <a href="javascript:void(0)" class="dropdown-item" id="tab-student-planner" onclick="selectPlannerTab('student-planner')">
+                <div class="dropdown-item-icon" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">
+                  <i data-lucide="graduation-cap" style="width: 16px; height: 16px;"></i>
+                </div>
+                <div>
+                  <div class="dropdown-item-title">Collegiate Living</div>
+                  <div class="dropdown-item-sub">Campus budget & zero overdraft</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <button class="nav-tab-btn" id="tab-history" onclick="switchTab('history')">
+          <i data-lucide="history" style="width: 14px; height: 14px;"></i> History
+        </button>
+        <button class="nav-tab-btn" id="tab-testimonials" onclick="switchTab('testimonials')">
+          <i data-lucide="star" style="width: 14px; height: 14px;"></i> Reviews
+        </button>
+      </nav>
+
+      <!-- Header Auth & Actions Slot -->
+      <div class="header-auth" id="header-auth-slot">
+        <button class="btn btn-outline btn-sm" onclick="switchTab('login')"><i data-lucide="log-in" style="width: 14px; height: 14px;"></i> Sign In</button>
+        <button class="btn btn-primary btn-sm" onclick="switchTab('register')"><i data-lucide="user-plus" style="width: 14px; height: 14px;"></i> Get Started</button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
+        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <div class="mobile-nav-group">
+        <div class="mobile-nav-heading">Main Navigation</div>
+        <button class="mobile-nav-link" onclick="switchTabMobile('home')"><i data-lucide="home"></i> Home</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('dashboard')"><i data-lucide="layout-dashboard"></i> Intelligence Dashboard</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('history')"><i data-lucide="history"></i> Recommendation History</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('testimonials')"><i data-lucide="star"></i> User Reviews</button>
+      </div>
+
+      <div class="mobile-nav-group">
+        <div class="mobile-nav-heading">8 Real-World Optimizers</div>
+        <button class="mobile-nav-link" onclick="switchTabMobile('home-planner')"><i data-lucide="armchair"></i> Home Interior Studio</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('party-planner')"><i data-lucide="party-popper"></i> Party & Events Planner</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('travel-planner')"><i data-lucide="plane"></i> Global Travel & Vacation</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('wedding-planner')"><i data-lucide="heart-handshake"></i> Milestone Wedding</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('tech-planner')"><i data-lucide="laptop"></i> Tech Workstation & Gear</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('grocery-planner')"><i data-lucide="shopping-bag"></i> Nutrition & Grocery</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('jewelry-planner')"><i data-lucide="gem"></i> Haute Joaillerie Studio</button>
+        <button class="mobile-nav-link" onclick="switchTabMobile('student-planner')"><i data-lucide="graduation-cap"></i> Collegiate Student Budget</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- App Main Content Container -->
+  <main class="app-container">
+
+    <!-- 1. HOME LANDING PAGE -->
+    <section id="view-home" class="tab-view active">
+      <div style="text-align: center; max-width: 860px; margin: 2rem auto 3.5rem;">
+        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3); padding: 0.4rem 1.1rem; border-radius: var(--radius-pill); margin-bottom: 1.5rem; font-size: 0.85rem; color: #a5b4fc; font-weight: 600;">
+          <i data-lucide="sparkles" style="width: 15px; height: 15px;"></i> Autonomous Multimodal Budget Allocation Across 8 Real-World Spending Domains
+        </div>
+        <h1 class="hero-title">
+          Master Real-World Spending. <br/><span class="gradient-text">Procure Smarter with AI.</span>
+        </h1>
+        <p class="hero-subtitle" style="margin: 0 auto 2.2rem;">
+          PocketSmart AI delivers structured budget allocation, vendor aggregation across global marketplaces, and multimodal intelligence for home interiors, events, global travel, weddings, workstations, nutrition, and student living.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <button class="btn btn-primary btn-lg" onclick="switchTab('dashboard')">
+            <i data-lucide="layout-dashboard"></i> Launch Intelligence Dashboard
+          </button>
+          <button class="btn btn-outline btn-lg" onclick="switchTab('home-planner')">
+            <i data-lucide="compass"></i> Explore AI Planners
+          </button>
+        </div>
+      </div>
+
+      <!-- Real World Modules 8-Grid -->
+      <div class="grid-3" style="margin-bottom: 3.5rem;">
+        <!-- 1. Home Interior -->
+        <div class="executive-card" onclick="switchTab('home-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: #818cf8;">
+              <i data-lucide="armchair" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge">Multi-Store AI</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Home Interior Studio</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Design living spaces with tailored furniture, lighting, and textiles curated from IKEA, Wayfair, Target, and Amazon within strict budget parameters.
+          </p>
+          <div style="color: var(--primary-light); font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Plan Interior <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 2. Party & Event -->
+        <div class="executive-card" onclick="switchTab('party-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(236, 72, 153, 0.15); display: flex; align-items: center; justify-content: center; color: #f472b6;">
+              <i data-lucide="party-popper" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge" style="color: #f472b6; border-color: rgba(236, 72, 153, 0.3);">Cost-Per-Guest</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Event & Party Planner</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Coordinate birthdays, receptions, and cocktail soirees. Dynamically balances venue leasing, gourmet catering packages, and ambient decorations.
+          </p>
+          <div style="color: #f472b6; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Optimize Celebration <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 3. Global Travel -->
+        <div class="executive-card" onclick="switchTab('travel-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(6, 182, 212, 0.15); display: flex; align-items: center; justify-content: center; color: #38bdf8;">
+              <i data-lucide="plane" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge" style="color: #38bdf8; border-color: rgba(6, 182, 212, 0.3);">Daily Burn Rate</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Global Travel & Vacation</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Structure flight itineraries, boutique eco-villas, scooter rentals, and local gastronomy passes while avoiding tourist pricing markups.
+          </p>
+          <div style="color: #38bdf8; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Plan Itinerary <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 4. Tech Workstation -->
+        <div class="executive-card" onclick="switchTab('tech-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center; color: #fbbf24;">
+              <i data-lucide="laptop" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge" style="color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">Price-to-Perf</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Tech Workstation & Gear</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Engineer high-performance developer and creator setups with Apple Silicon, 4K color-accurate displays, standing desks, and peripherals.
+          </p>
+          <div style="color: #fbbf24; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Build Tech Stack <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 5. Milestone Wedding -->
+        <div class="executive-card" onclick="switchTab('wedding-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(236, 72, 153, 0.15); display: flex; align-items: center; justify-content: center; color: #ec4899;">
+              <i data-lucide="heart-handshake" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge" style="color: #ec4899; border-color: rgba(236, 72, 153, 0.3);">Vendor Bypass</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Milestone Wedding Capital</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Orchestrate grand or intimate ceremonies. Allocates banquet lawns, multi-course artisanal catering, and cinematography with zero vendor inflation.
+          </p>
+          <div style="color: #ec4899; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Structure Wedding <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 6. Weekly Nutrition & Grocery -->
+        <div class="executive-card" onclick="switchTab('grocery-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10b981;">
+              <i data-lucide="shopping-bag" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge" style="color: #10b981; border-color: rgba(16, 185, 129, 0.3);">Zero Waste</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Weekly Nutrition & Grocery</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Formulate high-protein, Mediterranean, or plant-based meal prep baskets optimizing bioavailable protein and minimizing grocery waste.
+          </p>
+          <div style="color: #10b981; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Optimize Grocery Basket <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 7. Haute Joaillerie -->
+        <div class="executive-card" onclick="switchTab('jewelry-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #34d399;">
+              <i data-lucide="gem" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge" style="color: #34d399; border-color: rgba(16, 185, 129, 0.3);">Vision AI Match</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Haute Joaillerie Studio</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Upload outfit imagery or describe your attire. Gemini Vision matches 22K gold, moissanite solitaires, and Polki sets to your exact budget.
+          </p>
+          <div style="color: #34d399; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Match Jewelry Ensemble <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+
+        <!-- 8. Collegiate Student Survival -->
+        <div class="executive-card" onclick="switchTab('student-planner')" style="cursor: pointer;">
+          <div class="card-topbar">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: #818cf8;">
+              <i data-lucide="graduation-cap" style="width: 22px; height: 22px;"></i>
+            </div>
+            <span class="category-badge">Zero Overdraft</span>
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-hero);">Collegiate Student Survival</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.3rem;">
+            Zero-debt living matrix for undergraduate & graduate scholars balancing textbook rentals, transit subsidies, meal prep, and tech.
+          </p>
+          <div style="color: var(--primary-light); font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 0.4rem;">
+            Build Student Budget <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TESTIMONIALS -->
+    <section id="view-testimonials" class="tab-view">
+      <div style="text-align: center; max-width: 700px; margin: 1rem auto 2.5rem;">
+        <h2 class="view-heading">Verified Client Testimonials</h2>
+        <p class="view-desc">Authentic case studies and verified capital savings from users across lifestyle verticals.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="executive-card">
+          <div style="display: flex; gap: 0.25rem; color: #f59e0b; margin-bottom: 0.9rem;">
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+          </div>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.2rem;">
+            "PocketSmart AI reconstructed our travel itinerary to Bali. Booking recommendations and scooter rental aggregations saved us $920 while securing private villas."
+          </p>
+          <div style="display: flex; align-items: center; gap: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #06b6d4; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">DT</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.92rem; color: var(--text-hero);">Devin Thorne</div>
+              <div style="font-size: 0.78rem; color: var(--emerald); font-weight: 600;">Saved $920 on Travel</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="executive-card">
+          <div style="display: flex; gap: 0.25rem; color: #f59e0b; margin-bottom: 0.9rem;">
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+          </div>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.2rem;">
+            "Furnished our workstation with an M3 MacBook Air, 4K Dell display, and standing desk for $1,600 total. The student discounts and open-box hacks were incredible."
+          </p>
+          <div style="display: flex; align-items: center; gap: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #f59e0b; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">SK</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.92rem; color: var(--text-hero);">Siddharth Kumar</div>
+              <div style="font-size: 0.78rem; color: var(--emerald); font-weight: 600;">Saved $450 on Tech Gear</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="executive-card">
+          <div style="display: flex; gap: 0.25rem; color: #f59e0b; margin-bottom: 0.9rem;">
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+            <i data-lucide="star" style="fill: currentColor; width: 17px; height: 17px;"></i>
+          </div>
+          <p style="font-size: 0.92rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.2rem;">
+            "The weekly grocery and meal prep planner cut our family food budget from $250/week to $140/week while doubling our daily protein intake. Zero spoiled food!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #10b981; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">EL</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.92rem; color: var(--text-hero);">Elena Rostova</div>
+              <div style="font-size: 0.78rem; color: var(--emerald); font-weight: 600;">Saved $440/Month on Groceries</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. REGISTER -->
+    <section id="view-register" class="tab-view">
+      <div style="max-width: 460px; margin: 1.5rem auto;">
+        <div class="executive-card">
+          <div style="text-align: center; margin-bottom: 1.8rem;">
+            <h2 style="font-size: 1.7rem; font-weight: 800; color: var(--text-hero);">Create Account</h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.3rem;">Join PocketSmart AI for personalized lifestyle procurement</p>
+          </div>
+
+          <form id="form-register" onsubmit="executeRegister(event)">
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="user" style="width: 14px; height: 14px;"></i> Full Name</label>
+              <input type="text" id="reg-name" class="field-input" placeholder="e.g. Alex Mercer" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="mail" style="width: 14px; height: 14px;"></i> Corporate / Personal Email</label>
+              <input type="email" id="reg-email" class="field-input" placeholder="alex@enterprise.com" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="lock" style="width: 14px; height: 14px;"></i> Password</label>
+              <input type="password" id="reg-password" class="field-input" placeholder="••••••••" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="dollar-sign" style="width: 14px; height: 14px;"></i> Operational Currency</label>
+              <select id="reg-currency" class="field-select">
+                <option value="$">USD ($) — US Dollar</option>
+                <option value="₹">INR (₹) — Indian Rupee</option>
+                <option value="€">EUR (€) — Euro</option>
+                <option value="£">GBP (£) — British Pound</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;">
+              <i data-lucide="user-check"></i> Complete Secure Registration
+            </button>
+          </form>
+
+          <div style="text-align: center; margin-top: 1.4rem; font-size: 0.86rem; color: var(--text-muted);">
+            Existing subscriber? <a href="javascript:void(0)" onclick="switchTab('login')" style="color: var(--primary-light); text-decoration: none; font-weight: 700;">Sign In</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. LOGIN -->
+    <section id="view-login" class="tab-view">
+      <div style="max-width: 460px; margin: 1.5rem auto;">
+        <div class="executive-card">
+          <div style="text-align: center; margin-bottom: 1.8rem;">
+            <h2 style="font-size: 1.7rem; font-weight: 800; color: var(--text-hero);">Account Sign In</h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.3rem;">Sign in to access your intelligence dashboard and history</p>
+          </div>
+
+          <form id="form-login" onsubmit="executeLogin(event)">
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="mail" style="width: 14px; height: 14px;"></i> Registered Email</label>
+              <input type="email" id="login-email" class="field-input" value="demo@pocketsmart.ai" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="lock" style="width: 14px; height: 14px;"></i> Password</label>
+              <input type="password" id="login-password" class="field-input" value="DemoPass123!" required />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;">
+              <i data-lucide="log-in"></i> Authenticate Session
+            </button>
+          </form>
+
+          <div style="margin-top: 1.2rem; padding: 0.8rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: var(--radius-md); font-size: 0.8rem; color: #a5b4fc; text-align: center;">
+            <i data-lucide="info" style="width: 14px; height: 14px; vertical-align: middle;"></i> Demo Credentials configured for rapid evaluation.
+          </div>
+
+          <div style="text-align: center; margin-top: 1.4rem; font-size: 0.86rem; color: var(--text-muted);">
+            New user? <a href="javascript:void(0)" onclick="switchTab('register')" style="color: var(--secondary); text-decoration: none; font-weight: 700;">Create an Account</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. DASHBOARD -->
+    <section id="view-dashboard" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 class="view-heading">Intelligence Dashboard</h2>
+          <p class="view-desc" style="margin-bottom: 0;">Welcome back, <span id="dash-user-label" style="color: var(--primary-light); font-weight: 700;">Alex Mercer</span>.</p>
+        </div>
+        <div style="display: flex; gap: 0.6rem;">
+          <button class="btn btn-primary btn-sm" onclick="switchTab('home-planner')"><i data-lucide="plus"></i> New Budget Plan</button>
+          <button class="btn btn-outline btn-sm" onclick="syncUserSession()"><i data-lucide="refresh-cw"></i> Sync</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--primary-light);" id="dash-stat-plans">4</div>
+          <div class="stat-label">Active Portfolios</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--emerald);" id="dash-stat-savings">$640.00</div>
+          <div class="stat-label">Capital Saved</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--secondary);">97.2%</div>
+          <div class="stat-label">Precision Score</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--cyan);">8 Optimizers</div>
+          <div class="stat-label">Active Modules</div>
+        </div>
+      </div>
+
+      <div class="executive-card">
+        <div class="card-topbar">
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-hero);"><i data-lucide="clock" style="width: 18px; height: 18px; vertical-align: middle; color: var(--primary-light);"></i> Saved Recommendations Log</h3>
+          <button class="btn btn-outline btn-sm" onclick="switchTab('history')">View Full History</button>
+        </div>
+        <div id="dash-recent-records"></div>
+      </div>
+    </section>
+
+    <!-- 6. HOME PLANNER & RECS -->
+    <section id="view-home-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="armchair" style="color: var(--primary-light); vertical-align: middle;"></i> Home Interior Budget Planner</h2>
+          <p class="view-desc">Define room architectural parameters, aesthetic style preferences, and total budget.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-home-planner" onsubmit="executeGenerateHome(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Space & Room</label>
+                <select id="home-room" class="field-select">
+                  <option value="Living Room">Living Room</option>
+                  <option value="Master Bedroom">Master Bedroom</option>
+                  <option value="Dining & Kitchen">Dining & Kitchen</option>
+                  <option value="Home Office">Home Office</option>
+                  <option value="Balcony Terrace">Balcony Terrace</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Aesthetic Style</label>
+                <select id="home-style" class="field-select">
+                  <option value="Modern Minimalist">Modern Minimalist</option>
+                  <option value="Warm Scandinavian">Warm Scandinavian</option>
+                  <option value="Japandi Contemporary">Japandi Contemporary</option>
+                  <option value="Industrial Loft">Industrial Loft</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Budget Ceiling (<span class="currency-label">$</span>)</label>
+                <input type="number" id="home-budget" class="field-input" value="850" min="50" step="25" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Room Dimensions</label>
+                <select id="home-space" class="field-select">
+                  <option value="Compact (10x12 ft)">Compact (10x12 ft)</option>
+                  <option value="Standard (14x18 ft)" selected>Standard (14x18 ft)</option>
+                  <option value="Expansive Open-Concept (20x25+ ft)">Expansive Open-Concept (20x25+ ft)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Procurement Priorities</label>
+              <textarea id="home-notes" class="field-textarea" rows="2" placeholder="e.g. Include pet-friendly sofa, dimmable floor lamp from IKEA/Wayfair."></textarea>
+            </div>
+            <button type="submit" id="btn-run-home" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Generate AI Interior Recommendations</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-home-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('home-planner')">
+            <i data-lucide="arrow-left"></i> Modify Room Parameters
+          </button>
+          <h2 class="view-heading" id="home-recs-title">Home Interior Design Plan</h2>
+          <p class="view-desc" id="home-recs-summary" style="margin-bottom: 0;">Multi-store product procurement with spatial styling guidelines.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Allocated / Target</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--emerald);" id="home-recs-budget-badge">$0 / $0</div>
+        </div>
+      </div>
+      <div class="executive-card" style="margin-bottom: 2rem; background: rgba(99, 102, 241, 0.08); border-color: rgba(99, 102, 241, 0.25);">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: #a5b4fc; margin-bottom: 0.6rem;"><i data-lucide="lightbulb" style="width: 17px; height: 17px; vertical-align: middle;"></i> Architectural Styling Directives</h4>
+        <ul id="home-styling-rules" style="margin-left: 1.3rem; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0;"></ul>
+      </div>
+      <div class="catalog-grid" id="home-products-container"></div>
+    </section>
+
+    <!-- 7. PARTY PLANNER & RECS -->
+    <section id="view-party-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="party-popper" style="color: var(--secondary); vertical-align: middle;"></i> Party & Event Budget Planner</h2>
+          <p class="view-desc">Structure celebrations with algorithmic allocation across venues, catering packages, and ambient decorations.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-party-planner" onsubmit="executeGenerateParty(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Event Classification</label>
+                <select id="party-event" class="field-select">
+                  <option value="Birthday Celebration">Birthday Celebration</option>
+                  <option value="Cocktail & Dinner Soiree">Cocktail & Dinner Soiree</option>
+                  <option value="Anniversary Gathering">Anniversary Gathering</option>
+                  <option value="Corporate Mixer">Corporate Mixer</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Confirmed Guest Headcount</label>
+                <input type="number" id="party-guests" class="field-input" value="35" min="5" max="1000" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Total Capital Budget (<span class="currency-label">$</span>)</label>
+                <input type="number" id="party-budget" class="field-input" value="1100" min="100" step="50" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Theme & Ambience Styling</label>
+                <select id="party-theme" class="field-select">
+                  <option value="Modern Neon & Cocktail Loft">Modern Neon & Cocktail Loft</option>
+                  <option value="Rustic Bohemian Garden">Rustic Bohemian Garden</option>
+                  <option value="Elegant Black Tie & Gold">Elegant Black Tie & Gold</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Dietary & Venue Directives</label>
+              <textarea id="party-notes" class="field-textarea" rows="2" placeholder="e.g. Vegetarian finger food buffet, outdoor terrace with ambient lighting."></textarea>
+            </div>
+            <button type="submit" id="btn-run-party" class="btn btn-primary" style="width: 100%; padding: 0.85rem; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Synthesize Event Logistics Plan</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-party-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('party-planner')">
+            <i data-lucide="arrow-left"></i> Modify Event Logistics
+          </button>
+          <h2 class="view-heading" id="party-recs-title">Event Budget Allocation</h2>
+          <p class="view-desc" id="party-recs-summary" style="margin-bottom: 0;">Comprehensive allocation for venue, food catering, and decor.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Cost Per Guest</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #f472b6;" id="party-cost-per-guest">$0.00 / guest</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom: 1.8rem;">
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: #f472b6;"><i data-lucide="building" style="width: 17px; height: 17px; vertical-align: middle;"></i> Curated Venue Suggestions</h3>
+          <div id="party-venue-list"></div>
+        </div>
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--emerald);"><i data-lucide="badge-dollar-sign" style="width: 17px; height: 17px; vertical-align: middle;"></i> Smart Cost Optimization Hacks</h3>
+          <ul id="party-smart-tips" style="margin-left: 1.3rem; font-size: 0.88rem; line-height: 1.6; color: #cbd5e1;"></ul>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--cyan);"><i data-lucide="utensils" style="width: 17px; height: 17px; vertical-align: middle;"></i> Catering Packages</h3>
+          <div id="party-catering-list"></div>
+        </div>
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--amber);"><i data-lucide="palette" style="width: 17px; height: 17px; vertical-align: middle;"></i> Theme Decor Items</h3>
+          <div id="party-decor-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. GLOBAL TRAVEL PLANNER & RECS -->
+    <section id="view-travel-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="plane" style="color: #38bdf8; vertical-align: middle;"></i> Global Travel & Vacation Planner</h2>
+          <p class="view-desc">Structure flight itineraries, boutique eco-villas, scooter rentals, and local culinary passes.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-travel-planner" onsubmit="executeGenerateTravel(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Target Destination</label>
+                <input type="text" id="travel-dest" class="field-input" value="Bali, Indonesia" placeholder="e.g. Tokyo, Switzerland, Amalfi Coast" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Trip Duration (Days)</label>
+                <input type="number" id="travel-days" class="field-input" value="7" min="1" max="90" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Travelers Count</label>
+                <input type="number" id="travel-pax" class="field-input" value="2" min="1" max="20" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Total Trip Budget (<span class="currency-label">$</span>)</label>
+                <input type="number" id="travel-budget" class="field-input" value="1200" min="150" step="50" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Travel Style</label>
+              <select id="travel-style" class="field-select">
+                <option value="Boutique Luxury & Culture">Boutique Luxury & Culture</option>
+                <option value="Backpacker & Eco-Adventure">Backpacker & Eco-Adventure</option>
+                <option value="Relaxation & Beach Club Resort">Relaxation & Beach Club Resort</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Special Excursions / Notes</label>
+              <textarea id="travel-notes" class="field-textarea" rows="2" placeholder="e.g. Include private pool villa in Ubud and snorkeling in Nusa Penida."></textarea>
+            </div>
+            <button type="submit" id="btn-run-travel" class="btn btn-primary" style="width: 100%; padding: 0.85rem; background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Synthesize Global Travel Itinerary</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-travel-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('travel-planner')">
+            <i data-lucide="arrow-left"></i> Re-configure Travel Parameters
+          </button>
+          <h2 class="view-heading" id="travel-recs-title">Travel Optimization Blueprint</h2>
+          <p class="view-desc" id="travel-recs-summary" style="margin-bottom: 0;">Balanced flights, lodging, and activity allocation.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Daily Burn Rate</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;" id="travel-burn-badge">$0.00 / day</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom: 1.8rem;">
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: #38bdf8;"><i data-lucide="plane-takeoff" style="width: 17px; height: 17px; vertical-align: middle;"></i> Flights & Transport</h3>
+          <div id="travel-flights-list"></div>
+        </div>
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: #fbbf24;"><i data-lucide="hotel" style="width: 17px; height: 17px; vertical-align: middle;"></i> Lodging & Eco-Villas</h3>
+          <div id="travel-lodging-list"></div>
+        </div>
+      </div>
+      <div class="executive-card" style="background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.25);">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: #38bdf8; margin-bottom: 0.6rem;"><i data-lucide="shield" style="width: 17px; height: 17px; vertical-align: middle;"></i> Elite Traveler Rules</h4>
+        <ul id="travel-pro-rules" style="margin-left: 1.3rem; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0;"></ul>
+      </div>
+    </section>
+
+    <!-- 9. TECH WORKSTATION & HARDWARE PLANNER -->
+    <section id="view-tech-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="laptop" style="color: #fbbf24; vertical-align: middle;"></i> Tech Workstation & Gear Planner</h2>
+          <p class="view-desc">Engineer developer and creator hardware setups maximizing price-to-performance ratio.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-tech-planner" onsubmit="executeGenerateTech(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Primary Workflow</label>
+                <select id="tech-workflow" class="field-select">
+                  <option value="Full-Stack & AI Engineering">Full-Stack & AI Engineering</option>
+                  <option value="4K Video Editing & 3D Motion">4K Video Editing & 3D Motion</option>
+                  <option value="Remote Executive Productivity">Remote Executive Productivity</option>
+                  <option value="Data Science & ML Research">Data Science & ML Research</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Form Factor Setup</label>
+                <select id="tech-form" class="field-select">
+                  <option value="Laptop + 4K USB-C Hub Display">Laptop + 4K USB-C Hub Display</option>
+                  <option value="Desktop Powerhouse + Dual Monitors">Desktop Powerhouse + Dual Monitors</option>
+                  <option value="Minimalist Ultra-Portable Workstation">Minimalist Ultra-Portable Workstation</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Hardware Budget Ceiling (<span class="currency-label">$</span>)</label>
+              <input type="number" id="tech-budget" class="field-input" value="1800" min="300" step="50" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label">Ecosystem / Peripherals Notes</label>
+              <textarea id="tech-notes" class="field-textarea" rows="2" placeholder="e.g. Prefer macOS ecosystem, dual-motor standing desk, and wireless ergonomic mouse."></textarea>
+            </div>
+            <button type="submit" id="btn-run-tech" class="btn btn-primary" style="width: 100%; padding: 0.85rem; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Synthesize Hardware Architecture</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-tech-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('tech-planner')">
+            <i data-lucide="arrow-left"></i> Re-configure Tech Spec
+          </button>
+          <h2 class="view-heading" id="tech-recs-title">Hardware Architecture Stack</h2>
+          <p class="view-desc" id="tech-recs-summary" style="margin-bottom: 0;">Performance benchmarks and hardware components.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Allocated / Target</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #fbbf24;" id="tech-budget-badge">$0 / $0</div>
+        </div>
+      </div>
+      <div class="executive-card" style="margin-bottom: 2rem; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.25);">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: #fbbf24; margin-bottom: 0.6rem;"><i data-lucide="cpu" style="width: 17px; height: 17px; vertical-align: middle;"></i> Hardware Efficiency Benchmarks</h4>
+        <ul id="tech-benchmarks-list" style="margin-left: 1.3rem; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0;"></ul>
+      </div>
+      <div class="catalog-grid" id="tech-hardware-catalog"></div>
+    </section>
+
+    <!-- 10. MILESTONE WEDDING PLANNER & RECS -->
+    <section id="view-wedding-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="heart-handshake" style="color: #ec4899; vertical-align: middle;"></i> Milestone Wedding Capital Planner</h2>
+          <p class="view-desc">Structure celebration capital avoiding inflated wedding industry markups.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-wedding-planner" onsubmit="executeGenerateWedding(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Celebration Scale</label>
+                <select id="wedding-scale" class="field-select">
+                  <option value="Grand Traditional Celebration (150-300 Guests)">Grand Traditional Celebration (150-300 Guests)</option>
+                  <option value="Intimate Boutique Wedding (50-100 Guests)">Intimate Boutique Wedding (50-100 Guests)</option>
+                  <option value="Scenic Destination Ceremony">Scenic Destination Ceremony</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Estimated Guest Count</label>
+                <input type="number" id="wedding-guests" class="field-input" value="150" min="20" max="2000" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Total Wedding Capital (<span class="currency-label">$</span>)</label>
+                <input type="number" id="wedding-budget" class="field-input" value="5500" min="500" step="100" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Cultural / Aesthetic Theme</label>
+                <select id="wedding-theme" class="field-select">
+                  <option value="Royal Heritage & Contemporary Fusion">Royal Heritage & Contemporary Fusion</option>
+                  <option value="Minimalist Modern Bohemian">Minimalist Modern Bohemian</option>
+                  <option value="Classic White Tie Elegance">Classic White Tie Elegance</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Hospitality & Photography Priorities</label>
+              <textarea id="wedding-notes" class="field-textarea" rows="2" placeholder="e.g. Include 4K cinematic highlight reel and live artisanal buffet counters."></textarea>
+            </div>
+            <button type="submit" id="btn-run-wedding" class="btn btn-primary" style="width: 100%; padding: 0.85rem; background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Structure Wedding Budget Blueprint</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-wedding-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('wedding-planner')">
+            <i data-lucide="arrow-left"></i> Re-adjust Wedding Scale
+          </button>
+          <h2 class="view-heading" id="wedding-recs-title">Wedding Capital Blueprint</h2>
+          <p class="view-desc" id="wedding-recs-summary" style="margin-bottom: 0;">Disciplined vendor bypass and capital optimization.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Cost Per Guest</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #ec4899;" id="wedding-cost-badge">$0.00 / guest</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom: 1.8rem;">
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: #ec4899;"><i data-lucide="home" style="width: 17px; height: 17px; vertical-align: middle;"></i> Venue & Scenic Decor</h3>
+          <div id="wedding-venue-list"></div>
+        </div>
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--cyan);"><i data-lucide="utensils" style="width: 17px; height: 17px; vertical-align: middle;"></i> Catering & Hospitality</h3>
+          <div id="wedding-catering-list"></div>
+        </div>
+      </div>
+      <div class="executive-card" style="background: rgba(236, 72, 153, 0.08); border-color: rgba(236, 72, 153, 0.25);">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: #ec4899; margin-bottom: 0.6rem;"><i data-lucide="shield-check" style="width: 17px; height: 17px; vertical-align: middle;"></i> Vendor Directives & Financial Guardrails</h4>
+        <ul id="wedding-rules-list" style="margin-left: 1.3rem; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0;"></ul>
+      </div>
+    </section>
+
+    <!-- 11. GROCERY & NUTRITION PLANNER & RECS -->
+    <section id="view-grocery-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="shopping-bag" style="color: var(--emerald); vertical-align: middle;"></i> Weekly Nutrition & Grocery Blueprint</h2>
+          <p class="view-desc">Formulate high-protein, Mediterranean, or plant-based meal prep baskets optimizing bioavailable protein and zero produce waste.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-grocery-planner" onsubmit="executeGenerateGrocery(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Household Size</label>
+                <input type="number" id="grocery-household" class="field-input" value="2" min="1" max="15" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Dietary Paradigm</label>
+                <select id="grocery-diet" class="field-select">
+                  <option value="High-Protein Mediterranean">High-Protein Mediterranean</option>
+                  <option value="Clean Whole-Food Plant-Based">Clean Whole-Food Plant-Based</option>
+                  <option value="Athletic Ketogenic & Lean Meats">Athletic Ketogenic & Lean Meats</option>
+                  <option value="Balanced Budget Family Meal Prep">Balanced Budget Family Meal Prep</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Weekly Grocery Budget Allocation (<span class="currency-label">$</span>)</label>
+              <input type="number" id="grocery-budget" class="field-input" value="160" min="30" step="10" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label">Dietary Restrictions & Preferred Stores</label>
+              <textarea id="grocery-notes" class="field-textarea" rows="2" placeholder="e.g. Gluten-free, prefer Trader Joe's and local farmers market."></textarea>
+            </div>
+            <button type="submit" id="btn-run-grocery" class="btn btn-emerald" style="width: 100%; padding: 0.85rem;">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Generate Weekly Nutrition Blueprint</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-grocery-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('grocery-planner')">
+            <i data-lucide="arrow-left"></i> Re-adjust Grocery Basket
+          </button>
+          <h2 class="view-heading" id="grocery-recs-title">Nutrition & Grocery Blueprint</h2>
+          <p class="view-desc" id="grocery-recs-summary" style="margin-bottom: 0;">Optimized whole-food basket with batch preparation protocol.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Cost Per Meal</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--emerald);" id="grocery-cost-badge">$0.00 / meal</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom: 1.8rem;">
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--emerald);"><i data-lucide="shopping-cart" style="width: 17px; height: 17px; vertical-align: middle;"></i> Curated Weekly Grocery Basket</h3>
+          <div id="grocery-basket-list"></div>
+        </div>
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--cyan);"><i data-lucide="clock" style="width: 17px; height: 17px; vertical-align: middle;"></i> Batch Meal Prep Protocol</h3>
+          <ul id="grocery-prep-list" style="margin-left: 1.3rem; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. HAUTE JOAILLERIE PLANNER & RECS -->
+    <section id="view-jewelry-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="gem" style="color: var(--emerald); vertical-align: middle;"></i> Haute Joaillerie & Styling Studio</h2>
+          <p class="view-desc">Curate precious metal and gemstone pairings for your occasion and outfit silhouette using Google Gemini Multimodal Vision AI.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-jewelry-planner" onsubmit="executeGenerateJewelry(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Occasion & Setting</label>
+                <select id="jewel-occasion" class="field-select">
+                  <option value="Wedding / Grand Reception">Wedding / Grand Reception</option>
+                  <option value="Engagement / Sangeet Ceremony">Engagement / Sangeet Ceremony</option>
+                  <option value="Cocktail Evening Gala">Cocktail Evening Gala</option>
+                  <option value="Festive Diwali / Eid Celebration">Festive Diwali / Eid Celebration</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Outfit Silhouette & Color</label>
+                <input type="text" id="jewel-outfit" class="field-input" value="Emerald Green Silk Saree with Gold Zari Border" placeholder="e.g. Velvet Navy Gown, Pastel Lehenga" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Precious Metal Preference</label>
+                <select id="jewel-metal" class="field-select">
+                  <option value="22K Yellow Gold Finish">22K Yellow Gold Finish</option>
+                  <option value="18K Rose Gold & Diamonds">18K Rose Gold & Diamonds</option>
+                  <option value="Platinum & Moissanite Solitaire">Platinum & Moissanite Solitaire</option>
+                  <option value="925 Sterling Silver with CZ Accents">925 Sterling Silver with CZ Accents</option>
+                  <option value="Royal Kundan & Polki">Royal Kundan & Polki</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Total Capital Allocation (<span class="currency-label">$</span>)</label>
+                <input type="number" id="jewel-budget" class="field-input" value="500" min="30" step="25" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label"><i data-lucide="camera" style="width: 14px; height: 14px;"></i> Upload Outfit Photo (Multimodal Match)</label>
+              <input type="file" id="jewel-file-input" class="field-input" accept="image/*" onchange="processJewelImageUpload(event)" />
+              <div id="jewel-img-preview-wrapper" style="display: none; margin-top: 0.9rem; text-align: center;">
+                <img id="jewel-preview-tag" src="" alt="Outfit Visual Input" style="max-height: 180px; border-radius: var(--radius-md); border: 2px solid var(--emerald);" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Custom Styling Preferences</label>
+              <textarea id="jewel-notes" class="field-textarea" rows="2" placeholder="e.g. Prefer lightweight choker set with matching drop earrings."></textarea>
+            </div>
+            <button type="submit" id="btn-run-jewelry" class="btn btn-emerald" style="width: 100%; padding: 0.85rem;">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Curate Haute Joaillerie Pairing</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-jewelry-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('jewelry-planner')">
+            <i data-lucide="arrow-left"></i> Re-adjust Styling Options
+          </button>
+          <h2 class="view-heading" id="jewel-recs-title">Curated Haute Joaillerie Ensemble</h2>
+          <p class="view-desc" id="jewel-recs-summary" style="margin-bottom: 0;">Gemini Haute Joaillerie styling analysis.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Allocated Capital</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--emerald);" id="jewel-allocated-badge">$0.00</div>
+        </div>
+      </div>
+      <div class="executive-card" style="margin-bottom: 2rem; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25);">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--emerald); margin-bottom: 0.5rem;"><i data-lucide="sparkles" style="width: 17px; height: 17px; vertical-align: middle;"></i> Gemini Styling Harmony Verdict</h4>
+        <p id="jewel-verdict-content" style="font-size: 0.92rem; line-height: 1.6; color: #f1f5f9;"></p>
+      </div>
+      <div class="catalog-grid" id="jewelry-items-catalog"></div>
+    </section>
+
+    <!-- 13. COLLEGIATE STUDENT SURVIVAL -->
+    <section id="view-student-planner" class="tab-view">
+      <div style="max-width: 780px; margin: 0 auto;">
+        <div style="margin-bottom: 1.8rem;">
+          <h2 class="view-heading"><i data-lucide="graduation-cap" style="color: var(--primary-light); vertical-align: middle;"></i> Collegiate Student Survival Planner</h2>
+          <p class="view-desc">Zero-debt living matrix for undergraduate & graduate scholars balancing textbook rentals, transit subsidies, meal prep, and tech.</p>
+        </div>
+        <div class="executive-card">
+          <form id="form-student-planner" onsubmit="executeGenerateStudent(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">Academic Program</label>
+                <select id="student-level" class="field-select">
+                  <option value="Undergraduate Student (B.S. / B.A.)">Undergraduate Student (B.S. / B.A.)</option>
+                  <option value="Graduate / Master's Scholar (M.S. / MBA)">Graduate / Master's Scholar (M.S. / MBA)</option>
+                  <option value="Doctoral / PhD Candidate">Doctoral / PhD Candidate</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Monthly Living Allowance (<span class="currency-label">$</span>)</label>
+                <input type="number" id="student-budget" class="field-input" value="650" min="100" step="25" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">City Tier / Campus Location</label>
+              <select id="student-city" class="field-select">
+                <option value="High-Cost Metropolitan Campus (Tier 1)">High-Cost Metropolitan Campus (Tier 1)</option>
+                <option value="Mid-Sized College Town (Tier 2)">Mid-Sized College Town (Tier 2)</option>
+                <option value="Suburban University Enclave (Tier 3)">Suburban University Enclave (Tier 3)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Roommate & Transportation Directives</label>
+              <textarea id="student-notes" class="field-textarea" rows="2" placeholder="e.g. Shared 3-bedroom apartment, utilizing bus transit pass."></textarea>
+            </div>
+            <button type="submit" id="btn-run-student" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+              <span class="btn-text-content"><i data-lucide="sparkles"></i> Structure Zero-Debt Living Plan</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-student-recs" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <button class="btn btn-outline btn-sm" style="margin-bottom: 0.8rem;" onclick="switchTab('student-planner')">
+            <i data-lucide="arrow-left"></i> Re-adjust Student Allowance
+          </button>
+          <h2 class="view-heading" id="student-recs-title">Collegiate Living Blueprint</h2>
+          <p class="view-desc" id="student-recs-summary" style="margin-bottom: 0;">Zero-debt cash-flow allocation matrix.</p>
+        </div>
+        <div style="text-align: right; background: rgba(30, 41, 59, 0.5); padding: 0.9rem 1.3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Daily Discretionary</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-light);" id="student-daily-badge">$0.00 / day</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom: 1.8rem;">
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary-light);"><i data-lucide="pie-chart" style="width: 17px; height: 17px; vertical-align: middle;"></i> Line Item Allocation</h3>
+          <div id="student-categories-list"></div>
+        </div>
+        <div class="executive-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--emerald);"><i data-lucide="award" style="width: 17px; height: 17px; vertical-align: middle;"></i> Student Survival Commandments</h3>
+          <ul id="student-rules-list" style="margin-left: 1.3rem; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. HISTORY -->
+    <section id="view-history" class="tab-view">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 class="view-heading"><i data-lucide="history" style="color: var(--primary-light); vertical-align: middle;"></i> Historical Recommendations</h2>
+          <p class="view-desc" style="margin-bottom: 0;">Access and review all previously synthesized AI lifestyle plans.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="fetchHistoryLog()"><i data-lucide="refresh-cw"></i> Refresh Records</button>
+      </div>
+
+      <div class="executive-card">
+        <div id="history-log-shelf">
+          <p style="color: var(--text-muted); text-align: center; padding: 2rem;">Loading audit records...</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>
+        <div class="brand-wrapper" style="margin-bottom: 0.9rem;">
+          <div class="brand-icon" style="width: 30px; height: 30px;">
+            <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+          </div>
+          <span class="brand-name" style="font-size: 1.15rem;">PocketSmart AI™</span>
+        </div>
+        <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; max-width: 340px;">
+          Autonomous Lifestyle Budget Intelligence and Multi-Platform Procurement Engine powered by Google Gemini 3.7 Pro and FastAPI Microservices.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Lifestyle & Events</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="switchTab('home-planner')">Home Interior Studio</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('party-planner')">Party & Event Planner</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('travel-planner')">Global Travel & Vacation</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('wedding-planner')">Milestone Wedding</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Productivity & Living</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="switchTab('tech-planner')">Tech Workstation Setup</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('grocery-planner')">Weekly Nutrition & Meal Prep</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('jewelry-planner')">Haute Joaillerie Studio</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('student-planner')">Collegiate Student Budget</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Platform & Docs</h4>
+        <ul class="footer-links">
+          <li><a href="/docs" target="_blank">FastAPI Swagger UI</a></li>
+          <li><a href="/redoc" target="_blank">OpenAPI ReDoc Schema</a></li>
+          <li><a href="javascript:void(0)" onclick="verifySystemStartup()">System Health (/startup)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom-row">
+      <div>&copy; 2026 PocketSmart AI. Built for Tamil Nadu Skill Initiative. All rights reserved.</div>
+      <div style="display: flex; gap: 1rem;">
+        <span>FastAPI Architecture</span>
+        <span>•</span>
+        <span>Google GenAI Official SDK</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Shelf -->
+  <div id="toast-shelf"></div>
+
+  <!-- Client Application Controller Script -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

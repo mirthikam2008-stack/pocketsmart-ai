@@ -1,0 +1,3 @@
+"""
+PocketSmart AI - Backend Package
+"""
